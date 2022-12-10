@@ -1,0 +1,127 @@
+body,
+html {
+    background: linear-gradient( to right bottom, #4b1110, #4b1922, #472033, #462445, #301f43, #1f153a, #130d33);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* font-family: LaBelleAurore-Regular; */
+}
+
+.card-base {
+    background-color: white;
+    border-radius: 15px;
+    margin: auto;
+    margin-top: 110px;
+    height: 520px;
+    width: 900px;
+}
+
+.img-sec {
+    border-width: 0px 2px 0px 0px;
+    border-style: solid;
+    border-color: #462445;
+}
+
+.row {
+    height: 100%;
+}
+
+img {
+    margin-top: 19px;
+    margin-left: 18px;
+    border-style: outset;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.parentDiv {
+    display: inline-block;
+    position: relative;
+}
+
+.font1 {
+    font-family: "sofia", sans-serif;
+}
+
+.font2 {
+    font-family: "Trirong", serif;
+}
+
+.font3 {
+    font-family: "Audiowide", sans-serif;
+}
+
+.font4 {
+    font-family: "Brush Script MT", cursive;
+}
+
+.font5 {
+    font-family: "Courier New", monospace;
+}
+
+.font6 {
+    font-family: "Garamond", serif;
+}
+
+.font7 {
+    font-family: "Georgia", serif;
+}
+
+.font8 {
+    font-family: "Times New Roman", serif;
+}
+
+.font9 {
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+.font10 {
+    font-family: "Tahoma", sans-serif;
+}
+
+.font11 {
+    font-family: "Arial", sans-serif;
+}
+
+.fontsSec {
+    margin-left: 10px;
+}
+
+.fontsStyleSec {
+    margin-right: 55px;
+}
+
+.input_container {
+    border: 1px solid #e5e5e5;
+}
+
+input[type="file"]::file-selector-button {
+    background-color: #fff;
+    color: #000;
+    border: 0px;
+    border-right: 1px solid #e5e5e5;
+    padding: 10px 15px;
+    margin-right: 20px;
+    transition: 0.5s;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: #eee;
+    border: 0px;
+    border-right: 1px solid #e5e5e5;
+}
+
+.image-main {
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+}
