@@ -2,10 +2,19 @@
   <body>
     <section class="card-base">
       <div class="row">
-        <div class="img-sec col-5">
+        <div
+          class="img-sec col d-flex justify-content-center align-items-center"
+        >
           <div>
-            <div class="parentDiv">
-              <img :src="imageSrc" class="shadow-lg image-main" alt="sample" />
+            <div
+              class="parentDiv w-100 d-flex justify-content-center position-relative"
+              id="image"
+            >
+              <img
+                :src="imageSrc"
+                class="image-main border-0 m-0"
+                alt="sample"
+              />
               <p
                 :style="[
                   { left: lPosition + 'px' },
@@ -27,7 +36,7 @@
               </p>
             </div>
 
-            <div class="d-flex d-inline my-4 mx-4">
+            <div class="d-flex d-inline my-4 mx-4 d-none">
               <h6 class="my-2 lead">export image</h6>
               <a href="#">
                 <svg
@@ -47,9 +56,16 @@
                 </svg>
               </a>
             </div>
+            <button
+              class="btn btn-primary w-100 mt-4"
+              @click="export_image"
+              type="button"
+            >
+              Export image
+            </button>
           </div>
         </div>
-        <div class="tabs-sec col-7">
+        <div class="tabs-sec col">
           <div class="row">
             <div class="tabs col-12 pX-3 py-3">
               <div class="container">
@@ -70,15 +86,6 @@
                       id="register-tab"
                       data-bs-toggle="tab"
                       >Image</a
-                    >
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link"
-                      href="#watermark"
-                      id="register-tab"
-                      data-bs-toggle="tab"
-                      >WaterMark</a
                     >
                   </li>
                 </ul>
@@ -273,11 +280,12 @@
 </template>
 
 <script>
+import html2canvas from "html2canvas";
 export default {
   name: "App",
   data() {
     return {
-      imageSrc: "",
+      imageSrc: "../../sample.jpeg",
       selectedFont: "",
       selectedFontStyle: "",
       link: "",
@@ -311,6 +319,67 @@ export default {
       };
 
       reader.readAsDataURL(file);
+    },
+    export_image() {
+      const div = document.querySelector("#image");
+      this.getScreenshotOfElement(div);
+    },
+    async getScreenshotOfElement(element) {
+      const canvas = await html2canvas(element);
+      console.log(canvas.toDataURL("image/jpeg"));
+      this.download(canvas.toDataURL("image/jpeg"), this.link, "image/jpeg");
+      console.log(file);
+    },
+    download(data, filename, type) {
+      var block = data.split(";");
+      // Get the content type of the image
+      var contentType = block[0].split(":")[1]; // In this case "image/gif"
+      // get the real base64 content of the file
+      var realData = block[1].split(",")[1]; // In this case "R0lGODlhPQBEAPeoAJosM...."
+      var file = this.b64toBlob(realData, contentType);
+      if (window.navigator.msSaveOrOpenBlob)
+        // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+      else {
+        // Others
+        var a = document.createElement("a"),
+          url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () {
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        }, 0);
+      }
+    },
+    b64toBlob(b64Data, contentType, sliceSize) {
+      contentType = contentType || "";
+      sliceSize = sliceSize || 1080;
+
+      var byteCharacters = atob(b64Data);
+      var byteArrays = [];
+
+      for (
+        var offset = 0;
+        offset < byteCharacters.length;
+        offset += sliceSize
+      ) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+          byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        var byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+      }
+
+      var blob = new Blob(byteArrays, { type: contentType });
+      return blob;
     },
   },
 };
